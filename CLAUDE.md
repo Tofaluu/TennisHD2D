@@ -30,20 +30,19 @@ placeholder art gets replaced by hand-made assets later.
 ## HD-2D rendering notes
 - Sprites: alpha-clipped quads / sprite renderers with a lit shader that responds to 3D lights
   and casts shadows. `Sprite-Lit-Default` does NOT work here (2D Renderer / Light2D only).
-- Billboarding should rotate around Y (or a small partial tilt), not copy the full camera rotation —
-  `Assets/Scripts/Rendering/Billboard.cs` (from Gemini) currently copies full rotation; fix pending.
+- Billboarding rotates around Y with an optional partial tilt (`Assets/Scripts/Rendering/Billboard.cs`);
+  sprite pivots go at the feet.
 - Pixel art: point filtering, no mipmaps, consistent pixels-per-unit, avoid sub-pixel shimmer.
 - Tilt-shift needs a custom full-screen pass (URP DoF is distance-based, not screen-band).
 
 ## Machines / quality
-- Quality levels: `PC` (gaming PC) and `Mobile` (to be renamed/used as the laptop profile),
-  each with its own URP asset in `Assets/Settings/`.
-- `Assets/Scripts/Editor/QualityProfileSwitcher.cs` (from Gemini) stores the choice in EditorPrefs,
-  but `SetQualityLevel` still dirties `ProjectSettings/QualitySettings.asset`; fix pending.
+- Quality levels: `PC` (gaming PC) and `Laptop`, each with its own URP asset in `Assets/Settings/`.
+- Per-machine choice via `Tennis > Machine Quality Profile` (EditorPrefs). `QualitySettings.asset`
+  always commits `PC` as the active level; the switcher swaps it back on save.
 
 ## Roadmap
-1. Setup — packages, folders, quality tiers, this file (in progress)
-2. Graybox — court, capsule players, ball physics + hitting that feels good
+1. Setup — packages, folders, quality tiers, this file (done)
+2. Graybox — court, capsule players, ball physics + hitting that feels good (next)
 3. HD-2D look — sprite shader, lighting, tilt-shift, bloom, grading
 4. Game loop — serve, scoring, AI opponent, basic UI
 5. Art pass — AI sprites (PixelLab / Retro Diffusion / Unity Sprite Generator / Mixamo renders), later hand-made
